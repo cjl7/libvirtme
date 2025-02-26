@@ -1,0 +1,23 @@
+{% extends "inventory/base.html" %}
+
+{% block main_content %}
+
+    <h2>{{ host.name }}
+        <small>
+            {{ host.connection_string }}
+        </small>
+    </h2>
+    <pre>
+{{ info }}
+</pre>
+    <table class="table">
+        {% for dom in doms %}
+            <tr>
+                <td>{{ dom.name }}</td>
+                <td> {{ dom.memoryStats.actual }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "inventory/base.html" %}
+
+{% block main_content %}
+
+    {% for h in all_hosts %}
+
+        <div><a href="{% url 'view_host' h.id %}">{{ h.name }}/</a></div>
+
+    {% endfor %}
+
+    <table class="table">
+        {% for dom in all_doms %}
+            {%  for d in dom %}
+                <td>{{ d.name }}</td>
+                <td> {{ d.memoryStats.actual }}</td>
+                <td>{{  d.hostname }}</td>
+            </tr>
+        {% endfor %}
+        {% endfor %}
+    </table>
+
+
+{% endblock %}

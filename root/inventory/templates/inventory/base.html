@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Libvirtme</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript"
+            src="https://milankyncl.github.io/jquery-copy-to-clipboard/jquery.copy-to-clipboard.js"></script>
+
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- otl css and jc -->
+    {% load static %}
+    <link rel="icon" href="https://www.proact.eu/wp-content/uploads/2022/04/favicon-red-150x150.webp">
+    <link rel="stylesheet" href="{% static 'otl/otl.css' %}">
+    <script src="{% static 'otl/otl.js' %}"></script>
+
+</head>
+<body>
+
+<div class="container" id="top">
+    <a href="https://www.proact.eu/" target="_blank"> <img
+            src="https://www.proact.eu/wp-content/uploads/elementor/thumbs/proact-logo-pn2040zvet5jv1qzp4goqqd55ax8b6m70ebdkvb932.webp"
+            alt="ProAct" id="logo"></a>
+    <h1>Libvirtme</h1>
+</div>
+
+
+<div class="container">
+    <div class="col-md-8">
+        {% block main_content %}
+            you shouldn't see this
+        {% endblock %}
+    </div>
+</div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+        <div class="page-header">
+            <h1><small><a href="https://www.proact.eu/kubernetes-container-platform/" target="_blank">Proact Managed
+                Container Platform</a>
+                is a <a href="https://www.cncf.io/" target="_blank">CNCF</a> certified Kubernetes platform!</small></h1>
+        </div>
+    </div>
+</nav>
+</body>
+</html>
