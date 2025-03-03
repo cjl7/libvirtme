@@ -1,0 +1,15 @@
+{% extends "inventory/base.html" %}
+
+{% block main_content %}
+<div class="container">
+    <div class="row">
+   {{ domain.name }}
+    {{ blockinfo }}
+    </div>
+    <div>
+
+        <pre>{{ domain.XMLDesc }}</pre>
+
+    </div>
+</div>
+{% endblock %}

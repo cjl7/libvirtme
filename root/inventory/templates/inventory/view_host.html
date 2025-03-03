@@ -1,23 +1,59 @@
 {% extends "inventory/base.html" %}
 
 {% block main_content %}
+<div class="container text-center">
+    <div class="row align-items-start">
+        <div class="col">
+            <h2>{{ host.name }}
+                <small>
+                    {{ host.connection_string }}
+                </small>
+            </h2>
+            <div>
+                {{ info }}
 
-    <h2>{{ host.name }}
-        <small>
-            {{ host.connection_string }}
-        </small>
-    </h2>
-    <pre>
-{{ info }}
-</pre>
-    <table class="table">
-        {% for dom in doms %}
-            <tr>
-                <td>{{ dom.name }}</td>
-                <td> {{ dom.memoryStats.actual }}</td>
-            </tr>
-        {% endfor %}
-    </table>
+                <table>
+                {% for dev in  devs %}
+                <tr><td>{{ dev.name }}</td></tr>
+                    {% endfor %}
+
+                    </table>
+            </div>
+
+            <div class="row align-items-start">
+
+                <div class="col-8">
+                    <table id="domains" class="table table-striped table-sorted">
+                        <thead class="table-dark">
+                        <tr>
+                            <td>VM</td>
+                            <td>State</td>
+                            <td>Mem(KB)</td>
+                            <td>VCPU</td>
+                            <td>Block</td>
+                            <td>host</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for dom in doms %}
+
+                        <td><a href="{% url 'view_domain' dom.ID host.id %}">{{ dom.name }}</a></td>
+                        <td>{{ dom.info|slice:":1"|last }}</td>
+                        <td>{{ dom.info|slice:"1:2"|last }}</td>
+                        <td>{{ dom.info|slice:"3:4"|last }}</td>
+                        <td>{{ dom.blockInfo }}</td>
+                        <td><a href="{% url 'view_host' host.id %}">{{ host.name }}</a></td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
 
 
 {% endblock %}

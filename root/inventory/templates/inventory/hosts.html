@@ -1,0 +1,27 @@
+{% extends "inventory/base.html" %}
+
+{% block main_content %}
+<div class="container text-center">
+    <div class="row align-items-start">
+        <div class="col">
+            <table id="hosts" class="table table-striped">
+                <thead class="table-dark">
+                <th>Physical Host</th>
+                <th>#VMs</th>
+                <th>Host info</th>
+                </thead>
+                <tbody>
+                {% for h,count,nodeinfo in all_hosts %}
+                <tr>
+                    <td><a href="{% url 'view_host' h.id %}">{{ h.name }}/</a></td>
+                    <td>{{ count }}</td>
+                    <td>{{ nodeinfo }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
