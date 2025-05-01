@@ -2,7 +2,7 @@ import re
 
 from django.shortcuts import render
 from django.views.decorators.cache import cache_page
-from .models import PhysicalHost
+from .models import PhysicalHost, VirtualHost
 
 # Create your views here.
 from django.http import HttpResponse
@@ -13,6 +13,14 @@ def make_connection(host):
     if not conn:
         raise SystemExit("failed to connect to libvirt")
     return conn
+
+def doms(request):
+    all_doms = VirtualHost.objects.all()
+
+    return render(request, "inventory/dom.html", {
+        "all_doms": all_doms
+    })
+
 
 @cache_page(10 * 1)
 def index(request):
@@ -37,7 +45,7 @@ def all_hosts(request):
 
     for host in PhysicalHost.objects.all():
         conn = make_connection(host)
-        all_hosts.append([host, conn.listAllDomains().__len__(), conn.getInfo()])
+        all_hosts.append([host, conn.getInfo()])
 
     return render(request, "inventory/hosts.html", {
         "all_hosts": all_hosts
@@ -51,7 +59,7 @@ def view_host(request, id):
 
     info = conn.getInfo()
     devs = conn.listAllDevices()
-    doms = conn.listAllDomains()
+    doms = VirtualHost.objects.filter(physical_host=host)
 
     return render(request, "inventory/view_host.html", {
         "host": host,
@@ -60,14 +68,10 @@ def view_host(request, id):
         "devs": devs,
         })
 
-def view_domain(request, domid, physicalhostid):
+def view_domain(request, domid):
     """Show information about a single domain"""
-    conn = make_connection(PhysicalHost.objects.get(id=int(physicalhostid)))
-    domain = conn.lookupByID(int(domid))
-
-    # blockinfo = domain.blockInfo(path=)
+    domain = VirtualHost.objects.get(id=domid)
 
     return render(request, "inventory/view_domain.html", {
         "domain": domain,
-        "blockinfo": blockinfo
         })
