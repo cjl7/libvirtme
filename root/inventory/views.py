@@ -9,7 +9,7 @@ from django.http import HttpResponse
 import libvirt
 
 def make_connection(host):
-    conn = libvirt.open(host.connection_string)
+    conn = libvirt.openReadOnly(host.connection_string)
     if not conn:
         raise SystemExit("failed to connect to libvirt")
     return conn
