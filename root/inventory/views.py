@@ -3,7 +3,7 @@ import re
 from django.shortcuts import render
 from django.views.decorators.cache import cache_page
 from .models import PhysicalHost, VirtualHost
-
+from django.db.models import Sum, Count
 # Create your views here.
 from django.http import HttpResponse
 import libvirt
@@ -60,12 +60,20 @@ def view_host(request, id):
     info = conn.getInfo()
     devs = conn.listAllDevices()
     doms = VirtualHost.objects.filter(physical_host=host)
+    total_dom_cpu = VirtualHost.objects.filter(physical_host=host).aggregate(Sum('vcpus'))
+    total_dom_memory = VirtualHost.objects.filter(physical_host=host).aggregate(Sum('memory'))
+    total_dom_disk = VirtualHost.objects.filter(physical_host=host).aggregate(Sum('disk'))
+    total_dom_disk_used = VirtualHost.objects.filter(physical_host=host).aggregate(Sum('disk_used'))
 
     return render(request, "inventory/view_host.html", {
         "host": host,
         "info": info,
         "doms": doms,
         "devs": devs,
+        "total_dom_cpu": total_dom_cpu,
+        "total_dom_memory": total_dom_memory,
+        "total_dom_disk": total_dom_disk,
+        "total_dom_disk_used": total_dom_disk_used
         })
 
 def view_domain(request, domid):
