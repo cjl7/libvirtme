@@ -1,11 +1,7 @@
-import re
-
 from django.shortcuts import render
 from django.views.decorators.cache import cache_page
 from .models import PhysicalHost, VirtualHost
-from django.db.models import Sum, Count
-# Create your views here.
-from django.http import HttpResponse
+from django.db.models import Sum
 import libvirt
 
 def make_connection(host):
