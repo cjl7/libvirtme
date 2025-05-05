@@ -1,8 +1,6 @@
 .venv
 .idea
-*/db.sqlite3
-*/tags
-db.sqlite3
-tags
+**db.sqlite3
+**tags
 __pycache__
 .envrc
